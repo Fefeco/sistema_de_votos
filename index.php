@@ -1,7 +1,5 @@
 <?php
     session_start();
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,12 +13,14 @@
             background-color: var(--bs-btn-hover-bg);
             border-color: var(--bs-btn-hover-border-color);
         }
-
     </style>
     <title>Elecciones 2023</title>
 </head>
 <body>
-    <section class="container-md mt-5 px-4 shadow rounded pb-5" style="max-width: 600px;">
+    <header class="container-md mt-2 px-4 d-flex justify-content-end" style="max-width: 600px;">
+        <a class="link-offset-2 link-offset-4-hover link-underline link-underline-opacity-0" href="resultados.php">Iniciar sesión</a>
+    </header>
+    <section class="container-md mt-4 px-4 shadow rounded pb-5" style="max-width: 600px;">
         <?php if( isset( $_SESSION['errors']['menor_de_edad'] ) ): ?>
             <p class="py-1 px-2 text-danger bg-danger-subtle border border-danger rounded-3"><?=$_SESSION['errors']['menor_de_edad'] ?></p>
             <?php elseif( isset( $_SESSION['mensaje_exito'] ) ): ?>
@@ -75,14 +75,13 @@
                     <label class="btn btn-outline-success" for="candidato3">Candidato 3</label>
                 </div>
                 <?php if( isset( $_SESSION['errors']['candidato'] ) ){
-                            echo "<p class='form-text text-danger text-center'>{$_SESSION['errors']['candidato']}</p>";
-                            } 
-                        ?>
+                        echo "<p class='form-text text-danger text-center'>{$_SESSION['errors']['candidato']}</p>";
+                        } 
+                ?>
             </article>
             <?php 
                 unset( $_SESSION['errors'] );
-                $_SESSION = array();
-                session_destroy();
+                unset( $_SESSION['mensaje_exito'] );
             ?>
             <div class="d-grid col-6 mx-auto">
                 <button type="submit" class="btn btn-info btn-lg">Enviar voto</button>

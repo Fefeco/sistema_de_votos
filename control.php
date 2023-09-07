@@ -19,32 +19,44 @@
     
     if( empty( $_POST['name'] ) ){
         $_SESSION['errors']['name'] = 'Debe completar este campo';
-    } else $_SESSION['datos']['name'] = htmlspecialchars( $_POST['name'] );
+    } else {
+        $_SESSION['datos']['name'] = htmlspecialchars( $_POST['name'] );
+    } 
 
     if( empty( $_POST['lastname'] ) ){
         $_SESSION['errors']['lastname'] = 'Debe completar este campo';
-    } else $_SESSION['datos']['lastname'] = htmlspecialchars( $_POST['lastname'] );
+    } else {
+        $_SESSION['datos']['lastname'] = htmlspecialchars( $_POST['lastname'] );
+    } 
 
     if( empty( $_POST['dni'] ) ){
         $_SESSION['errors']['dni'] = 'Debe completar este campo';
     } else {
         if( preg_match( '/^[0-9]{8}[a-zA-z]?/', $_POST['dni'] ) === 0 ){
             $_SESSION['errors']['dni'] = "Formato incorrecto. Debe contener 8 digitos y una letra";
-        } else $_SESSION['datos']['dni'] = $_POST['dni'];
+        } else {
+            $_SESSION['datos']['dni'] = $_POST['dni'];
+        } 
     }
 
     if( empty( $_POST['candidato']) ){
         $_SESSION['errors']['candidato'] = 'Debe seleccionar un candidato';
-    } else $_SESSION['datos']['candidato'] = $_POST['candidato'];
+    } else {
+        $_SESSION['datos']['candidato'] = $_POST['candidato'];
+    } 
     
     if( isset( $_SESSION['errors'] ) ){
         header('Location: index.php');
         exit();
     }
     // Fin control de errores
-
-    $linea = implode( ',', $_SESSION['datos'] );
+    $datos = array();
+    foreach( $_SESSION['datos'] as $key => $value ){
+        array_push( $datos, $key.'='.$value );
+    }
+    $linea = implode( ',', $datos );
     unset( $_SESSION['datos'] );
+    unset( $datos );
 
     if( file_exists( 'elecciones2023.dat' ) ){
         @$file = fopen( 'elecciones2023.dat', 'a' );
@@ -59,6 +71,7 @@
         } else die('ERROR permiso de escritura');
     }
     fclose( $file );
+    unset( $linea );
     $_SESSION['mensaje_exito'] = 'Su voto ha sido registrado con éxito';
     header('Location: index.php');
     die();
