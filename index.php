@@ -22,9 +22,9 @@
     </header>
     <section class="container-md mt-4 px-4 shadow rounded pb-5" style="max-width: 600px;">
         <?php if( isset( $_SESSION['errors']['menor_de_edad'] ) ): ?>
-            <p class="py-1 px-2 text-danger bg-danger-subtle border border-danger rounded-3"><?=$_SESSION['errors']['menor_de_edad'] ?></p>
+            <p class="py-1 px-3 text-danger bg-danger-subtle border-3 border-start border-danger rounded-1"><?=$_SESSION['errors']['menor_de_edad']?></p>
             <?php elseif( isset( $_SESSION['mensaje_exito'] ) ): ?>
-            <p class="py-1 px-2 text-success bg-success-subtle border border-success rounded-3"><?php echo $_SESSION['mensaje_exito'] ?></p>
+            <p class="py-1 px-3 text-success bg-success-subtle border-success border-start border-3 rounded-1"><?php echo $_SESSION['mensaje_exito'] ?></p>
         <?php endif; ?>
         <h1>Elecciones 2023</h1>
         <form action="control.php" method="post">
